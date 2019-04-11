@@ -1,0 +1,135 @@
+NAME := {{.opts.AppName}}
+
+VERSION ?= $(shell cat VERSION.txt)
+REGION ?= {{.opts.Aws.Region}}
+ENVIRONMENT ?= production
+AUTO_DEPLOY ?= false
+S3_BUCKET := tf-$(NAME)-deployment-$(REGION)
+
+# Set an output prefix, which is the local directory if not specified
+PREFIX?=$(shell pwd)
+# Set the build dir, where built cross-compiled binaries will be output
+BUILDDIR := $(PREFIX)/bin
+
+all: clean build fmt lint test staticcheck vet
+
+.PHONY: build
+build: ## Builds static executable
+	@echo "+ $@"
+	CGO_ENABLED=0 go build -o $(BUILDDIR)/$(NAME) .
+
+.PHONY: fmt
+fmt: ## Verifies all files have men `gofmt`ed
+	@echo "+ $@"
+	@gofmt -s -l . | grep -v '.pb.go:' | grep -v vendor | tee /dev/stderr
+
+.PHONY: lint
+lint: ## Verifies `golint` passes
+	@echo "+ $@"
+	@golint ./... | grep -v '.pb.go:' | grep -v vendor | tee /dev/stderr
+
+.PHONY: vet
+vet: ## Verifies `go vet` passes
+	@echo "+ $@"
+	@go vet $(shell go list ./... | grep -v vendor) | grep -v '.pb.go:' | tee /dev/stderr
+
+.PHONY: staticcheck
+staticcheck: ## Verifies `staticcheck` passes
+	@echo "+ $@"
+	@staticcheck $(shell go list ./... | grep -v vendor) | grep -v '.pb.go:' | tee /dev/stderr
+
+.PHONY: test
+test: ## Runs the go tests
+	@echo "+ $@"
+	go test -v $(shell go list ./... | grep -v vendor)
+
+.PHONY: cover
+cover: ## Runs go test with coverage
+	@echo "" > coverage.txt
+	@for d in $(shell go list ./... | grep -v vendor); do \
+		go test -race -coverprofile=profile.out -covermode=atomic "$$d"; \
+		if [ -f profile.out ]; then \
+			cat profile.out >> coverage.txt; \
+			rm profile.out; \
+		fi; \
+	done;
+
+.PHONY: release
+release: ## Builds cross-compiled function for AWS Lambda runtime
+	@echo "+ $@ $(VERSION)"
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(BUILDDIR)/$(NAME) .
+
+.PHONY: s3-init
+s3-init: ## Creates AWS S3 bucket for deployments
+	@echo "+ $@"
+	@aws s3api create-bucket \
+	--bucket=$(S3_BUCKET) \
+	--create-bucket-configuration LocationConstraint=$(REGION) \
+	--region=$(REGION)
+
+.PHONY: s3-destroy
+s3-destroy: ## Removes AWS S3 bucket including all deployments
+	@echo "+ $@"
+	@echo s3://$(S3_BUCKET)
+	@aws s3 rb s3://$(S3_BUCKET) --force
+
+.PHONY: package
+package: release ## Creates and uploads S3 deployment packages for all functions
+	@echo "+ $@"
+	@echo "Uploading release $(VERSION)"
+	zip -j $(BUILDDIR)/$(NAME).zip bin/$(NAME)
+	aws s3 cp $(BUILDDIR)/$(NAME).zip s3://$(S3_BUCKET)/$(VERSION)/$(NAME).zip --region=$(REGION)
+
+.PHONY: init
+init: ## Initialize Terraform working directory and backend configuration
+	@echo "+ $@"
+	@cd terraform && terraform init \
+	-input=false \
+	-backend-config="key=$(ENVIRONMENT)/$(NAME)/terraform.tfstate"
+
+.PHONY: validate
+validate: ## Validates and rewrited the Terraform files to canonical format
+	@echo "+ $@"
+	@cd terraform && terraform fmt -check=true
+	@cd terraform && terraform validate \
+	-var version=$(VERSION) \
+	-var region=$(REGION) \
+	-var s3_bucket=$(S3_BUCKET)
+
+.PHONY: plan
+plan: ## Generate and show a Terraform execution plan
+	@echo "+ $@"
+	@cd terraform && terraform plan \
+	-input=false \
+	-var version=$(VERSION) \
+	-var region=$(REGION) \
+	-var s3_bucket=$(S3_BUCKET)
+
+ifeq ($(AUTO_DEPLOY), true)
+ FORCE=-auto-approve
+endif
+
+.PHONY: deploy
+deploy: ## Builds or changes infrastructure using Terraform
+	@echo "+ $@"
+	@cd terraform && terraform apply $(FORCE) -input=false \
+	-var version=$(VERSION) \
+	-var region=$(REGION) \
+	-var s3_bucket=$(S3_BUCKET)
+
+.PHONY: destroy
+destroy: ## Destroy Terraform-managed infrastructure
+	@echo "+ $@"
+	@cd terraform && terraform destroy \
+	-var version=$(VERSION) \
+	-var region=$(REGION) \
+	-var s3_bucket=$(S3_BUCKET)
+
+.PHONY: clean
+clean: ## Cleanup any build binaries or packages
+	@echo "+ $@"
+	$(RM) -r $(BUILDDIR)
+
+.PHONY: help
+help: ## Display this help screen
+	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'	

@@ -1,0 +1,34 @@
+language: go
+
+go:
+  - 1.11.x
+
+env:
+  global:
+    - GO111MODULE=on
+    # see https://www.terraform.io/guides/running-terraform-in-automation.html
+    - TF_IN_AUTOMATION=true
+    - tf_version=0.11.10
+    - AWS_ACCESS_KEY_ID={REPLACE-ME}
+    # AWS_SECRET_KEY
+    - secure: { REPLACE-ME }
+
+before_install:
+  - go get -u golang.org/x/lint/golint
+  - go get -u honnef.co/go/tools/cmd/staticcheck
+
+script:
+  - make
+
+before_deploy:
+  - wget https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip -O /tmp/terraform.zip
+  - sudo unzip -d /usr/local/bin/ /tmp/terraform.zip
+  - pip install -qq --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+
+deploy:
+  provider: script
+  script: make AUTO_DEPLOY=true init validate package deploy
+  skip_cleanup: true
+  on:
+    branch: master

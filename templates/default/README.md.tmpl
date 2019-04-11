@@ -1,0 +1,33 @@
+# {{.opts.AppName}}
+
+Thank you for generating your serverless application with Func.
+
+## dependencies
+
+- (dev) [Go 1.11+](https://golang.org/dl/)
+- (deploy) [aws cli](https://aws.amazon.com/cli/) with configured [credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- (deploy) [terraform 0.11+](https://www.terraform.io/downloads.html)
+
+## Quick start
+
+To build and deploy the Lambda function on AWS run
+
+```
+$ make s3-init init package deploy
+```
+
+and check the AWS Lambda console.
+
+To destroy the generated infrastructure run
+
+```
+$ make destroy s3-destroy
+```
+
+Run `make help` to see all available targets.
+
+## What Next?
+
+See [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda) for available event sources and configuration options.
+
+[Powered by Func](https://github.com/spring-media/func)

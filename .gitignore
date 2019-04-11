@@ -1,0 +1,5 @@
+# Generated packr files
+*-packr.go
+
+# dependencies
+vendor/
