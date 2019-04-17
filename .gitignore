@@ -1,5 +1,9 @@
-# Generated packr files
+# Generated packr2 files
 *-packr.go
 
 # dependencies
 vendor/
+
+# release
+dist/
+coverage.txt

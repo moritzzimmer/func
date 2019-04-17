@@ -1,0 +1,14 @@
+project_name: func
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+      - GO111MODULE=on
+    hooks:
+      pre: packr2
+      post: packr2 clean
+release:
+  draft: true
+  prerelease: true
