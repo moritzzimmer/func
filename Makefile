@@ -28,6 +28,7 @@ build: $(PACKR2) ## Builds a static executable
 	@packr2
 	@CGO_ENABLED=0 go build -o $(BUILDDIR)/$(NAME) .
 	@packr2 clean
+	@go mod tidy
 
 .PHONY: fmt
 fmt: ## Verifies all files have men `gofmt`ed
