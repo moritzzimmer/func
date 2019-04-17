@@ -10,3 +10,7 @@ deploy:
     on:
       tags: true
       condition: $TRAVIS_OS_NAME = linux
+
+cache:
+  directories:
+    - $HOME/gopath/pkg/mod
