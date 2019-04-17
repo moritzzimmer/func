@@ -14,7 +14,7 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "func",
 	Short: "Serverless functions ftw",
-	Long: `Func is a CLI library to simplify development and deployment
+	Long: `Func is a CLI app to simplify development and deployment
 of serverless functions using Go, Terraform and AWS.
 `,
 }
