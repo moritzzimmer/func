@@ -6,17 +6,13 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"strings"
-	"text/template"
 
 	"github.com/gobuffalo/genny"
-	"github.com/gobuffalo/gogen"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/spring-media/func/core"
+	"github.com/spring-media/func/generate/core"
 )
 
 type initOptions struct {
@@ -44,60 +40,32 @@ inside an empty directory.
 		return nil
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		coreOpts := core.DefaultOpts()
-		err := viper.Unmarshal(coreOpts)
+		opts := core.DefaultOpts()
+		err := viper.Unmarshal(opts)
 		if err != nil {
 			fmt.Printf("failed to unmarshal external configuration - keeping defaults")
 		}
 
 		module := args[0]
 		names := strings.SplitAfter(module, "/")
-		opts := &initOptions{
-			Core:   coreOpts,
-			Name:   names[len(names)-1],
-			Module: module,
-		}
-		data := map[string]interface{}{
-			"opts": opts,
-		}
-		g := genny.New()
-		g.Transformer(gogen.TemplateTransformer(data, template.FuncMap{}))
-		g.Box(packr.New("default", "../templates/default"))
-
-		g.Command(exec.Command("go", "mod", "init", opts.Module))
-		g.Command(exec.Command("go", "get", "-u"))
-
-		g.RunFn(func(r *genny.Runner) error {
-			if _, err := r.LookPath("golint"); err != nil {
-				c := gogen.Get("golang.org/x/lint/golint", "-u")
-				if err := r.Exec(c); err != nil {
-					return err
-				}
-			}
-			return nil
-		})
-		g.RunFn(func(r *genny.Runner) error {
-			if _, err := r.LookPath("staticcheck"); err != nil {
-				c := gogen.Get("honnef.co/go/tools/cmd/staticcheck", "-u")
-				if err := r.Exec(c); err != nil {
-					return err
-				}
-			}
-			return nil
-		})
-		g.Command(exec.Command("go", "mod", "tidy"))
+		opts.App.Name = names[len(names)-1]
+		opts.App.Module = module
 
 		run := genny.WetRunner(context.Background())
 		if viper.GetBool("dry-run") {
 			run = genny.DryRunner(context.Background())
 		}
-		run.With(g)
+		gg, err := core.New(opts)
+		if err != nil {
+			return err
+		}
+		run.WithGroup(gg)
 
 		if err := run.Run(); err != nil {
 			return err
 		}
 
-		run.Logger.Infof("Your Lambda application '%s' has been generated!", opts.Name)
+		run.Logger.Infof("Your Lambda application '%s' has been generated!", opts.App.Name)
 		run.Logger.Info("Quickstart: 'make s3-init init package deploy'.")
 		run.Logger.Info("Please see README.md for details.")
 		return nil
@@ -107,7 +75,8 @@ inside an empty directory.
 func init() {
 	rootCmd.AddCommand(initCmd)
 
-	initCmd.Flags().BoolP("dry-run", "d", false, "dry run - nothing will be generated")
+	initCmd.Flags().BoolP("dry-run", "d", false, "dry run")
+	initCmd.Flags().String("ci-provider", "none", "ci provider config file to generate [none, travis]")
 	viper.BindPFlags(initCmd.Flags())
 
 	cobra.OnInitialize(initConfig)
