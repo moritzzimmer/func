@@ -1,10 +1,10 @@
-module "{{.opts.AppName}}" {
-  source        = "spring-media/lambda/aws"
-  version       = "{{.opts.Terraform.ModuleVersion}}"
-  handler       = "{{.opts.AppName}}"
-  function_name = "tf-{{.opts.AppName}}"
-  s3_bucket     = "tf-{{.opts.AppName}}-deployment-{{.opts.Aws.Region}}"
-  s3_key        = "v0.1.0/{{.opts.AppName}}.zip"
+module "{{.opts.Name}}" {
+  source        = "{{.opts.Core.Terraform.Module.Source}}"
+  version       = "{{.opts.Core.Terraform.Module.Version}}"
+  handler       = "{{.opts.Name}}"
+  function_name = "tf-{{.opts.Name}}"
+  s3_bucket     = "tf-{{.opts.Name}}-deployment-{{.opts.Core.Aws.Region}}"
+  s3_key        = "v0.1.0/{{.opts.Name}}.zip"
 
   event {
     type                = "cloudwatch-scheduled-event"

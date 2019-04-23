@@ -1,7 +1,7 @@
-NAME := {{.opts.AppName}}
+NAME := {{.opts.Name}}
 
 VERSION ?= $(shell cat VERSION.txt)
-REGION ?= {{.opts.Aws.Region}}
+REGION ?= {{.opts.Core.Aws.Region}}
 ENVIRONMENT ?= production
 AUTO_DEPLOY ?= false
 S3_BUCKET := tf-$(NAME)-deployment-$(REGION)
