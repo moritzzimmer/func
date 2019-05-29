@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	cfgFile string
 	rootCmd = &cobra.Command{
 		Use:   "func",
 		Short: "Serverless functions ftw",

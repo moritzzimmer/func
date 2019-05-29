@@ -1,0 +1,13 @@
+module "{{.opts.App.Name}}" {
+  source        = "{{.opts.Terraform.Module.Source}}"
+  version       = "{{.opts.Terraform.Module.Version}}"
+  handler       = "{{.opts.App.Name}}"
+  function_name = "tf-{{.opts.App.Name}}"
+  s3_bucket     = "tf-{{.opts.App.Name}}-deployment-{{.opts.Aws.Region}}"
+  s3_key        = "v0.1.0/{{.opts.App.Name}}.zip"
+
+  event {
+    type                = "cloudwatch-scheduled-event"
+    schedule_expression = "rate(1 minute)"
+  }
+}
