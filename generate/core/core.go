@@ -7,18 +7,35 @@ import (
 	"github.com/gobuffalo/genny"
 	"github.com/gobuffalo/gogen"
 	"github.com/gobuffalo/packr/v2"
+	"github.com/spring-media/func/generate/ci"
 )
 
 func New(opts *Options) (*genny.Group, error) {
 	gg := &genny.Group{}
+	core, err := core(opts)
+	if err != nil {
+		return gg, err
+	}
+	gg.Add(core)
+
+	if opts.CI != nil {
+		g, err := ci.New(opts.CI)
+		if err != nil {
+			return gg, err
+		}
+		gg.Add(g)
+	}
+	return gg, nil
+}
+
+func core(opts *Options) (*genny.Generator, error) {
 	g := genny.New()
-	gg.Add(g)
 
 	data := map[string]interface{}{
 		"opts": opts,
 	}
 	g.Transformer(gogen.TemplateTransformer(data, template.FuncMap{}))
-	err := g.Box(packr.New("default", "./templates"))
+	err := g.Box(packr.New("core", "./templates"))
 	if err != nil {
 		return nil, err
 	}
@@ -45,6 +62,5 @@ func New(opts *Options) (*genny.Group, error) {
 		return nil
 	})
 	g.Command(exec.Command("go", "mod", "tidy"))
-
-	return gg, nil
+	return g, nil
 }
