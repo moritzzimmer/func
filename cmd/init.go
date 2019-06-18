@@ -63,7 +63,7 @@ inside an empty directory.
 		}
 
 		run.Logger.Infof("Your Lambda application '%s' has been generated!", opts.App.Name)
-		run.Logger.Info("Quickstart: 'make s3-init init package deploy'.")
+		run.Logger.Info("Quickstart: 'make init package deploy'.")
 		run.Logger.Info("Please see README.md for details.")
 		return nil
 	},
