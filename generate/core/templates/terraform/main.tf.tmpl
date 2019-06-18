@@ -1,10 +1,10 @@
 module "{{.opts.App.Name}}" {
-  source        = "{{.opts.Terraform.Module.Source}}"
-  version       = "{{.opts.Terraform.Module.Version}}"
-  handler       = "{{.opts.App.Name}}"
+  source  = "{{.opts.Terraform.Module.Source}}"
+  version = "{{.opts.Terraform.Module.Version}}"
+
+  filename      = "${path.module}/../bin/{{.opts.App.Name}}.zip"
   function_name = "tf-{{.opts.App.Name}}"
-  s3_bucket     = "tf-{{.opts.App.Name}}-deployment-{{.opts.Aws.Region}}"
-  s3_key        = "v0.1.0/{{.opts.App.Name}}.zip"
+  handler       = "{{.opts.App.Name}}"
 
   event {
     type                = "cloudwatch-scheduled-event"

@@ -5,7 +5,6 @@ Thank you for generating your Lambda project with Func.
 ## dependencies
 
 - (dev) [Go 1.11+](https://golang.org/dl/)
-- (deploy) [aws cli](https://aws.amazon.com/cli/) with configured [credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
 - (deploy) [terraform {{.opts.Terraform.Version}}](https://www.terraform.io/downloads.html)
 
 ## Quick start
@@ -13,7 +12,7 @@ Thank you for generating your Lambda project with Func.
 To build and deploy the Lambda function on AWS run
 
 ```
-$ make s3-init init package deploy
+$ make init package deploy
 ```
 
 and check the AWS Lambda console.
@@ -21,7 +20,7 @@ and check the AWS Lambda console.
 To destroy the generated infrastructure run
 
 ```
-$ make destroy s3-destroy
+$ make destroy
 ```
 
 Run `make help` to see all available targets.
