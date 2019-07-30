@@ -40,7 +40,7 @@ func core(opts *Options) (*genny.Generator, error) {
 		return nil, err
 	}
 
-	g.Command(exec.Command("go", "mod", "init", opts.App.Name))
+	g.Command(exec.Command("go", "mod", "init", opts.App.Module))
 	g.Command(exec.Command("go", "get", "-u"))
 
 	g.RunFn(func(r *genny.Runner) error {
