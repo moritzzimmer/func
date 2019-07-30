@@ -34,6 +34,7 @@ build: $(PACKR2) ## Builds a static executable
 install: $(PACKR2)
 	@echo "+ $@"
 	@GO111MODULE=on packr2 install
+	@packr2 clean
 	
 .PHONY: fmt
 fmt: ## Verifies all files have men `gofmt`ed
