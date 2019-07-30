@@ -3,8 +3,8 @@ package cmd
 import (
 	"context"
 	"errors"
-	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/gobuffalo/genny"
@@ -14,21 +14,18 @@ import (
 	"github.com/spring-media/func/generate/core"
 )
 
-var initCmd = &cobra.Command{
-	Use:           "init [module name]",
-	Aliases:       []string{"initialize", "initialise", "create", "new"},
-	Example:       "func init github.com/you/app",
+var newCmd = &cobra.Command{
+	Use:           "new [module name]",
+	Aliases:       []string{"initialize", "initialise", "create", "init"},
+	Example:       "func new github.com/you/app",
 	SilenceErrors: true,
-	Short:         "Initialize a Lambda project",
-	Long: `Initializes Terraform, CI and Go ressources for a new AWS Lambda project 
-inside an empty directory.
+	Short:         "Creates a new Lambda project",
+	Long: `Creates Terraform, CI and Go ressources for a new AWS Lambda project 
+in a new directory.
 `,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
 			return errors.New("module name must be provided, example 'github.com/you/app'")
-		}
-		if empty, _ := isEmpty(); !empty {
-			return errors.New("command must be executed in an empty directory")
 		}
 		return nil
 	},
@@ -52,6 +49,13 @@ inside an empty directory.
 		if viper.GetBool("dry-run") {
 			run = genny.DryRunner(context.Background())
 		}
+
+		pwd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		run.Root = filepath.Join(pwd, opts.App.Name)
+
 		gg, err := core.New(opts)
 		if err != nil {
 			return err
@@ -70,28 +74,9 @@ inside an empty directory.
 }
 
 func init() {
-	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(newCmd)
 
-	initCmd.Flags().BoolP("dry-run", "d", false, "dry run")
-	initCmd.Flags().String("ci", "none", "ci provider config file to generate [none, travis]")
-	viper.BindPFlags(initCmd.Flags())
-}
-
-func isEmpty() (bool, error) {
-	dir, err := os.Getwd()
-	if err != nil {
-		return false, err
-	}
-
-	f, err := os.Open(dir)
-	if err != nil {
-		return false, err
-	}
-	defer f.Close()
-
-	_, err = f.Readdirnames(1)
-	if err == io.EOF {
-		return true, nil
-	}
-	return false, err
+	newCmd.Flags().BoolP("dry-run", "d", false, "dry run")
+	newCmd.Flags().String("ci", "none", "ci provider config file to generate [none, travis]")
+	viper.BindPFlags(newCmd.Flags())
 }

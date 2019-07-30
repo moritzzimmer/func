@@ -30,6 +30,11 @@ build: $(PACKR2) ## Builds a static executable
 	@packr2 clean
 	@go mod tidy
 
+.PHONY: install
+install: $(PACKR2)
+	@echo "+ $@"
+	@GO111MODULE=on packr2 install
+	
 .PHONY: fmt
 fmt: ## Verifies all files have men `gofmt`ed
 	@echo "+ $@"
