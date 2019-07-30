@@ -42,7 +42,7 @@ func DefaultOpts() *Options {
 			Version: "0.11.14",
 			Module: &Module{
 				Source:  "spring-media/lambda/aws",
-				Version: "3.0.2",
+				Version: "3.1.0",
 			},
 		},
 	}
