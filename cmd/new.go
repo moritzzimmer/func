@@ -36,6 +36,7 @@ in a new directory.
 		names := strings.SplitAfter(module, "/")
 		opts.App.Name = names[len(names)-1]
 		opts.App.Module = module
+		opts.App.Event = viper.GetString("event")
 
 		ciProv := viper.GetString("ci")
 		if len(ciProv) > 0 && ciProv != "none" {
@@ -77,6 +78,7 @@ func init() {
 	rootCmd.AddCommand(newCmd)
 
 	newCmd.Flags().BoolP("dry-run", "d", false, "dry run")
+	newCmd.Flags().StringP("event", "e", "cloudwatch-event", "event type triggering the Lambda function [cloudwatch-event, dynamodb]")
 	newCmd.Flags().String("ci", "none", "ci provider config file to generate [none, travis]")
 	viper.BindPFlags(newCmd.Flags())
 }
