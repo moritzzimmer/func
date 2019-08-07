@@ -6,8 +6,25 @@ module "{{.opts.App.Name}}" {
   function_name = "tf-{{.opts.App.Name}}"
   handler       = "{{.opts.App.Name}}"
 
+  {{if eq .opts.App.Event "cloudwatch-event" -}}
   event {
     type                = "cloudwatch-scheduled-event"
     schedule_expression = "rate(1 minute)"
   }
+  {{end -}}
+
+  {{if eq .opts.App.Event "dynamodb" -}}
+  event {
+    type                    = "dynamodb"
+    stream_event_source_arn = "arn:aws:dynamodb:eu-west-1:647379381847:table/some-table/stream/some-identifier"
+    table_name              = "some-table"
+  }
+  {{end -}}
+
+  {{if eq .opts.App.Event "sns" -}}
+  event {
+    type      = "sns"
+    topic_arn = "arn:aws:sns:eu-west-1:123456789:test-topic"
+  }
+  {{end -}}
 }

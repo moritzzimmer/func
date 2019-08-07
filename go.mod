@@ -15,6 +15,6 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/viper v1.4.0
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4 // indirect
-	golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e // indirect
-	golang.org/x/tools v0.0.0-20190729092621-ff9f1409240a // indirect
+	golang.org/x/sys v0.0.0-20190804053845-51ab0e2deafa // indirect
+	golang.org/x/tools v0.0.0-20190806215303-88ddfcebc769 // indirect
 )

@@ -1,8 +1,14 @@
 package main
 
 import (
-	"log"
+	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "sns") -}}
+	"context"
+	{{end -}}
+	"fmt"
 
+	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "sns") -}}
+	"github.com/aws/aws-lambda-go/events"
+	{{end -}}
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
@@ -10,6 +16,33 @@ func main() {
 	lambda.Start(handler)
 }
 
+{{if eq .opts.App.Event "cloudwatch-event" -}}
 func handler() {
-	log.Println("Hello World")
+	fmt.Println("Hello {{.opts.App.Name}}")
 }
+{{end -}}
+
+{{if eq .opts.App.Event "dynamodb" -}}
+func handler(ctx context.Context, e events.DynamoDBEvent) {
+	for _, record := range e.Records {
+		fmt.Printf("Processing request data for event ID %s, type %s.\n", record.EventID, record.EventName)
+
+		// Print new values for attributes of type String
+		for name, value := range record.Change.NewImage {
+			if value.DataType() == events.DataTypeString {
+				fmt.Printf("Attribute name: %s, value: %s\n", name, value.String())
+			}
+		}
+	}
+}
+{{end -}}
+
+{{if eq .opts.App.Event "sns" -}}
+func handler(ctx context.Context, snsEvent events.SNSEvent) {
+	for _, record := range snsEvent.Records {
+		snsRecord := record.SNS
+
+		fmt.Printf("[%s %s] Message = %s \n", record.EventSource, snsRecord.Timestamp, snsRecord.Message)
+	}
+}
+{{end}}
