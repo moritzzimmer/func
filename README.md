@@ -2,7 +2,14 @@
 
 [![Build Status](https://travis-ci.com/spring-media/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/spring-media/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform.
+Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform. It'll scaffold an optionated project structure generating code for
+
+- function code
+- build automation using make
+- infrastructure and deployment automation using [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda)
+- continuous integration/deployment providers like Travis
+
+Func is in an early alpha stage so expect bugs and breaking changes but give it a try!
 
 ## requirements
 
