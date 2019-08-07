@@ -1,12 +1,12 @@
 package main
 
 import (
-	{{if eq .opts.App.Event "dynamodb" -}}
+	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "sns") -}}
 	"context"
 	{{end -}}
 	"fmt"
 
-	{{if eq .opts.App.Event "dynamodb" -}}
+	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "sns") -}}
 	"github.com/aws/aws-lambda-go/events"
 	{{end -}}
 	"github.com/aws/aws-lambda-go/lambda"
@@ -36,3 +36,13 @@ func handler(ctx context.Context, e events.DynamoDBEvent) {
 	}
 }
 {{end -}}
+
+{{if eq .opts.App.Event "sns" -}}
+func handler(ctx context.Context, snsEvent events.SNSEvent) {
+	for _, record := range snsEvent.Records {
+		snsRecord := record.SNS
+
+		fmt.Printf("[%s %s] Message = %s \n", record.EventSource, snsRecord.Timestamp, snsRecord.Message)
+	}
+}
+{{end}}

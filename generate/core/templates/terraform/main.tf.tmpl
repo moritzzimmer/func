@@ -19,5 +19,12 @@ module "{{.opts.App.Name}}" {
     stream_event_source_arn = "arn:aws:dynamodb:eu-west-1:647379381847:table/some-table/stream/some-identifier"
     table_name              = "some-table"
   }
-  {{end}}
+  {{end -}}
+
+  {{if eq .opts.App.Event "sns" -}}
+  event {
+    type      = "sns"
+    topic_arn = "arn:aws:sns:eu-west-1:123456789:test-topic"
+  }
+  {{end -}}
 }
