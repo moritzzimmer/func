@@ -9,6 +9,8 @@ builds:
     hooks:
       pre: packr2
       post: packr2 clean
+    ldflags:
+      - -s -w -X version.version={{.Version}} -X version.commit={{.ShortCommit}} -X version.date={{.Date}}
 release:
   draft: true
   prerelease: true
