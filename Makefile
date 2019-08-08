@@ -1,8 +1,6 @@
 # Setup name variables for the package/tool
 NAME := func
 
-export GOFLAGS=-mod=vendor
-
 # Set an output prefix, which is the local directory if not specified
 PREFIX?=$(shell pwd)
 # Set the build dir, where built cross-compiled binaries will be output
@@ -20,7 +18,7 @@ all: help
 ci: build fmt lint test staticcheck vet
 
 $(PACKR2):
-	go get -u github.com/gobuffalo/packr/v2/packr2
+	GO111MODULE=off go get -u github.com/gobuffalo/packr/v2/packr2
 
 .PHONY: build
 build: $(PACKR2) ## Builds a static executable
@@ -41,7 +39,7 @@ fmt: ## Verifies all files have men `gofmt`ed
 	@gofmt -s -l . | grep -v vendor | tee /dev/stderr
 
 $(LINTER):
-	go get -u golang.org/x/lint/golint
+	GO111MODULE=off go get -u golang.org/x/lint/golint
 
 .PHONY: lint
 lint: $(LINTER) ## Verifies `golint` passes
@@ -54,7 +52,7 @@ vet: ## Verifies `go vet` passes
 	@go vet $(shell go list ./... | grep -v vendor) | tee /dev/stderr
 
 $(STATIC_CHECK):
-	go get -u honnef.co/go/tools/cmd/staticcheck
+	GO111MODULE=off go get -u honnef.co/go/tools/cmd/staticcheck
 
 .PHONY: staticcheck
 staticcheck: $(STATIC_CHECK) ## Verifies `staticcheck` passes

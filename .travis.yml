@@ -7,10 +7,13 @@ env:
   global:
     - GO111MODULE=on
     - GOPROXY=https://gocenter.io
-    - GOFLAGS=-mod=vendor
 
 script:
   - make ci
+  - go mod tidy
+
+after_success:
+  - git status
 
 deploy:
   - provider: script
@@ -19,3 +22,7 @@ deploy:
     on:
       tags: true
       condition: $TRAVIS_OS_NAME = linux
+
+cache:
+  directories:
+    - $HOME/gopath/pkg/mod
