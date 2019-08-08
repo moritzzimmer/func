@@ -5,34 +5,12 @@ func does not try to reinvent the wheel! Instead, it uses the already great whee
 Thank you to the following **GIANTS**:
 
 
-* [github.com/aws/aws-lambda-go](https://godoc.org/github.com/aws/aws-lambda-go)
-
 * [github.com/gobuffalo/genny](https://godoc.org/github.com/gobuffalo/genny)
 
 * [github.com/gobuffalo/gogen](https://godoc.org/github.com/gobuffalo/gogen)
 
-* [github.com/gobuffalo/logger](https://godoc.org/github.com/gobuffalo/logger)
-
 * [github.com/gobuffalo/packr/v2](https://godoc.org/github.com/gobuffalo/packr/v2)
-
-* [github.com/gobuffalo/plush](https://godoc.org/github.com/gobuffalo/plush)
-
-* [github.com/magiconair/properties](https://godoc.org/github.com/magiconair/properties)
-
-* [github.com/markbates/oncer](https://godoc.org/github.com/markbates/oncer)
-
-* [github.com/pelletier/go-toml](https://godoc.org/github.com/pelletier/go-toml)
-
-* [github.com/spf13/afero](https://godoc.org/github.com/spf13/afero)
 
 * [github.com/spf13/cobra](https://godoc.org/github.com/spf13/cobra)
 
-* [github.com/spf13/jwalterweatherman](https://godoc.org/github.com/spf13/jwalterweatherman)
-
 * [github.com/spf13/viper](https://godoc.org/github.com/spf13/viper)
-
-* [golang.org/x/crypto](https://godoc.org/golang.org/x/crypto)
-
-* [golang.org/x/sys](https://godoc.org/golang.org/x/sys)
-
-* [golang.org/x/tools](https://godoc.org/golang.org/x/tools)
