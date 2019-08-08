@@ -1,6 +1,8 @@
 # Setup name variables for the package/tool
 NAME := func
 
+export GOFLAGS=-mod=vendor
+
 # Set an output prefix, which is the local directory if not specified
 PREFIX?=$(shell pwd)
 # Set the build dir, where built cross-compiled binaries will be output

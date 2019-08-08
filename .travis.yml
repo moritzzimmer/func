@@ -7,12 +7,10 @@ env:
   global:
     - GO111MODULE=on
     - GOPROXY=https://gocenter.io
+    - GOFLAGS=-mod=vendor
 
 script:
   - make ci
-
-after_success:
-  - git status
 
 deploy:
   - provider: script
