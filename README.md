@@ -18,7 +18,7 @@ Func is in an early alpha stage so expect bugs and breaking changes but give it 
 MacOS
 
 ```
-$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.1/func_0.0.1_darwin_amd64.tar.gz 
+$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.1/func_0.0.1_darwin_amd64.tar.gz
 $ tar -xvzf func_0.0.1_darwin_amd64.tar.gz
 $ sudo mv func /usr/local/bin/func
 ```
@@ -52,8 +52,15 @@ Flags:
 Use "func [command] --help" for more information about a command.
 ```
 
-## generate new project
+### requirements
 
+for using generated projects with func
+
+- [Go 1.11+](https://golang.org/)
+- [Terraform 0.11+](https://www.terraform.io/downloads.html)
+- configured [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) with sufficient IAM permissions for creating/deleting ressources from [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda) module
+
+## generate new project
 
 ### quickstart
 
@@ -69,7 +76,7 @@ $ make init package deploy
 
 ```
 $ func help new
-Creates Terraform, CI and Go ressources for a new AWS Lambda project 
+Creates Terraform, CI and Go ressources for a new AWS Lambda project
 in a new directory.
 
 Usage:
@@ -86,7 +93,7 @@ Flags:
   -d, --dry-run        dry run
   -e, --event string   event type triggering the Lambda function [cloudwatch-event, dynamodb, sns] (default "cloudwatch-event")
   -h, --help           help for new
-```   
+```
 
 ## shoulders of giants
 
