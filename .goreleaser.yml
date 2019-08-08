@@ -9,8 +9,15 @@ builds:
     hooks:
       pre: packr2
       post: packr2 clean
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
     ldflags:
-      - -s -w -X version.version={{.Version}} -X version.commit={{.ShortCommit}} -X version.date={{.Date}}
+      - -s -w -X github.com/spring-media/func/cmd.version={{.Version}} -X github.com/spring-media/func/cmd.commit={{.ShortCommit}} -X github.com/spring-media/func/cmd.date={{.Date}}
+archives:
+  - files:
+      - none*
 release:
-  draft: true
   prerelease: true
