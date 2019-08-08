@@ -6,9 +6,13 @@ go:
 env:
   global:
     - GO111MODULE=on
+    - GOPROXY=https://gocenter.io
 
 script:
   - make ci
+
+after_success:
+  - git status
 
 deploy:
   - provider: script

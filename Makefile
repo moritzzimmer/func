@@ -1,8 +1,6 @@
 # Setup name variables for the package/tool
 NAME := func
 
-export GO111MODULE := on
-
 # Set an output prefix, which is the local directory if not specified
 PREFIX?=$(shell pwd)
 # Set the build dir, where built cross-compiled binaries will be output
@@ -28,7 +26,6 @@ build: $(PACKR2) ## Builds a static executable
 	@packr2
 	@CGO_ENABLED=0 go build -o $(BUILDDIR)/$(NAME) .
 	@packr2 clean
-	@go mod tidy
 
 .PHONY: install
 install: $(PACKR2)
@@ -83,7 +80,6 @@ clean: $(PACKR2) ## Cleanup any build binaries or packages
 	@echo "+ $@"
 	@$(RM) -r $(BUILDDIR)
 	@packr2 clean
-	@go mod tidy
 
 .PHONY: help
 help: ## Display this help screen
