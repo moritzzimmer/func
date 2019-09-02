@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/spring-media/func/blob/master/logo.svg" width="360"></p>
+<p align="center"><img src="https://github.com/spring-media/func/blob/master/logo.png" width="360"></p>
 
 # func [![Build Status](https://travis-ci.com/spring-media/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/spring-media/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
