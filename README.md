@@ -1,6 +1,7 @@
-# func
+<p align="center"><img src="https://github.com/spring-media/func/blob/master/logo.svg" width="360"></p>
 
-[![Build Status](https://travis-ci.com/spring-media/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/spring-media/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# func [![Build Status](https://travis-ci.com/spring-media/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/spring-media/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform. It'll scaffold an optionated project structure generating code for
 
@@ -12,6 +13,18 @@ Func is a CLI app to simplify development and deployment of AWS Lambda functions
 Func is in an early alpha stage so expect bugs and breaking changes but give it a try!
 
 ## installation
+
+Before installing `func` please make sure your system meets the following requirements:
+
+- a working Go environment ([Go 1.11+](https://golang.org/))
+- a working terraform environment ([Terraform 0.11+](https://www.terraform.io/downloads.html))
+- configured [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) with sufficient IAM permissions for creating/deleting ressources from [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda) module
+
+### Homebrew (macOS)
+
+```
+brew install spring-media/tap/func
+```
 
 ### from release archive - 64 bits
 
@@ -51,14 +64,6 @@ Flags:
 
 Use "func [command] --help" for more information about a command.
 ```
-
-### requirements
-
-for using generated projects with func
-
-- [Go 1.11+](https://golang.org/)
-- [Terraform 0.11+](https://www.terraform.io/downloads.html)
-- configured [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) with sufficient IAM permissions for creating/deleting ressources from [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda) module
 
 ## generate new project
 

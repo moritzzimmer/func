@@ -28,12 +28,12 @@ archives:
 release:
   prerelease: true
 
-brew:
-  name: func
-  github:
-    owner: spring-media
-    name: homebrew-tap
-  install: |
-    bin.install "func"
-  test: |
-    system "#{bin}/func", "version"
+brews:
+  - name: func
+    github:
+      owner: spring-media
+      name: homebrew-tap
+    install: |
+      bin.install "func"
+    test: |
+      system "#{bin}/func", "version"
