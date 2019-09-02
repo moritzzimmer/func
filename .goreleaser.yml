@@ -1,8 +1,10 @@
 project_name: func
+
 before:
   hooks:
     - go mod download
     - go mod tidy
+
 builds:
   - env:
       - CGO_ENABLED=0
@@ -18,8 +20,20 @@ builds:
       - amd64
     ldflags:
       - -s -w -X github.com/spring-media/func/cmd.version={{.Version}} -X github.com/spring-media/func/cmd.commit={{.ShortCommit}} -X github.com/spring-media/func/cmd.date={{.Date}}
+
 archives:
   - files:
       - none*
+
 release:
   prerelease: true
+
+brew:
+  name: func
+  github:
+    owner: spring-media
+    name: homebrew-tap
+  install: |
+    bin.install "func"
+  test: |
+    system "#{bin}/func", "version"
