@@ -6,11 +6,15 @@ PREFIX?=$(shell pwd)
 # Set the build dir, where built cross-compiled binaries will be output
 BUILDDIR := $(PREFIX)/dist
 
+# App version
+VERSION := $(shell cat VERSION.txt)
+
 # Binary dependencies for this Makefile
 BIN_DIR := $(GOPATH)/bin
 LINTER := $(BIN_DIR)/golint
 PACKR2 := $(BIN_DIR)/packr2
 STATIC_CHECK := $(BIN_DIR)/staticcheck
+SEMBUMP := $(BIN_DIR)/sembump
 
 all: help
 
@@ -75,10 +79,13 @@ cover: ## Runs all go tests (including integration tests) with coverage
 		fi; \
 	done;
 
+$(SEMBUMP):
+	GO111MODULE=off go get -u github.com/jessfraz/junk/sembump
+
 .PHONY: bump-version
 BUMP := patch
 bump-version: $(SEMBUMP) ## Bump the version in the version file. Set BUMP to [ patch | major | minor ].
-	$(eval NEW_VERSION = $(shell $(BINDIR)/sembump --kind $(BUMP) $(VERSION)))
+	$(eval NEW_VERSION = $(shell $(BIN_DIR)/sembump --kind $(BUMP) $(VERSION)))
 	@echo "Bumping VERSION.txt from $(VERSION) to $(NEW_VERSION)"
 	echo $(NEW_VERSION) > VERSION.txt
 	@echo "Updating links in README.md"
