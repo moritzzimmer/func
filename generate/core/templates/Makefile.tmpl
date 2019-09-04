@@ -65,23 +65,18 @@ package: release ## Creates deployment package
 .PHONY: init
 init: ## Initialize Terraform working directory and backend configuration
 	@echo "+ $@"
-	@cd terraform && terraform init \
-	-input=false \
-	-backend-config="key=$(ENVIRONMENT)/$(NAME)/terraform.tfstate"
+	@terraform init -input=false -backend-config="key=$(ENVIRONMENT)/$(NAME)/terraform.tfstate" terraform/
 
 .PHONY: validate
 validate: ## Validates and rewrited the Terraform files to canonical format
 	@echo "+ $@"
-	@cd terraform && terraform fmt -check=true
-	@cd terraform && terraform validate \
-	-var region=$(REGION) 
+	@terraform fmt -check=true terraform/
+	@terraform validate -var region=$(REGION) terraform/
 
 .PHONY: plan
 plan: ## Generate and show a Terraform execution plan
 	@echo "+ $@"
-	@cd terraform && terraform plan \
-	-input=false \
-	-var region=$(REGION)
+	@terraform plan -input=false -var region=$(REGION) terraform/
 
 ifeq ($(AUTO_DEPLOY), true)
  FORCE=-auto-approve
@@ -90,14 +85,12 @@ endif
 .PHONY: deploy
 deploy: ## Builds or changes infrastructure using Terraform
 	@echo "+ $@"
-	@cd terraform && terraform apply $(FORCE) -input=false \
-	-var region=$(REGION)
+	@terraform apply $(FORCE) -input=false -var region=$(REGION) terraform/
 
 .PHONY: destroy
 destroy: ## Destroy Terraform-managed infrastructure
 	@echo "+ $@"
-	@cd terraform && terraform destroy \
-	-var region=$(REGION)
+	@terraform destroy -var region=$(REGION) terraform/
 
 .PHONY: clean
 clean: ## Cleanup any build binaries or packages
