@@ -2,7 +2,6 @@
 
 # func [![Build Status](https://travis-ci.com/spring-media/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/spring-media/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-
 Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform. It'll scaffold an optionated project structure generating code for
 
 - function code
@@ -31,16 +30,16 @@ brew install spring-media/tap/func
 MacOS
 
 ```
-$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.1/func_0.0.1_darwin_amd64.tar.gz
-$ tar -xvzf func_0.0.1_darwin_amd64.tar.gz
+$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.4/func_0.0.4_darwin_amd64.tar.gz
+$ tar -xvzf func_0.0.4_darwin_amd64.tar.gz
 $ sudo mv func /usr/local/bin/func
 ```
 
 GNU/Linux
 
 ```
-$ wget https://github.com/spring-media/func/releases/download/v0.0.1/func_0.0.1_linux_amd64.tar.gz
-$ tar -xvzf func_0.0.1_linux_amd64.tar.gz
+$ wget https://github.com/spring-media/func/releases/download/v0.0.4/func_0.0.4_linux_amd64.tar.gz
+$ tar -xvzf func_0.0.4_linux_amd64.tar.gz
 $ sudo mv func /usr/local/bin/
 ```
 
