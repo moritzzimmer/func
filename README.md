@@ -30,16 +30,16 @@ brew install spring-media/tap/func
 MacOS
 
 ```
-$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.5/func_0.0.5_darwin_amd64.tar.gz
-$ tar -xvzf func_0.0.5_darwin_amd64.tar.gz
+$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.6/func_0.0.6_darwin_amd64.tar.gz
+$ tar -xvzf func_0.0.6_darwin_amd64.tar.gz
 $ sudo mv func /usr/local/bin/func
 ```
 
 GNU/Linux
 
 ```
-$ wget https://github.com/spring-media/func/releases/download/v0.0.5/func_0.0.5_linux_amd64.tar.gz
-$ tar -xvzf func_0.0.5_linux_amd64.tar.gz
+$ wget https://github.com/spring-media/func/releases/download/v0.0.6/func_0.0.6_linux_amd64.tar.gz
+$ tar -xvzf func_0.0.6_linux_amd64.tar.gz
 $ sudo mv func /usr/local/bin/
 ```
 
