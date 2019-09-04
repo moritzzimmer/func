@@ -75,6 +75,23 @@ cover: ## Runs all go tests (including integration tests) with coverage
 		fi; \
 	done;
 
+.PHONY: bump-version
+BUMP := patch
+bump-version: $(SEMBUMP) ## Bump the version in the version file. Set BUMP to [ patch | major | minor ].
+	$(eval NEW_VERSION = $(shell $(BINDIR)/sembump --kind $(BUMP) $(VERSION)))
+	@echo "Bumping VERSION.txt from $(VERSION) to $(NEW_VERSION)"
+	echo $(NEW_VERSION) > VERSION.txt
+	@echo "Updating links in README.md"
+	sed -i '' s/$(subst v,,$(VERSION))/$(subst v,,$(NEW_VERSION))/g README.md
+	git add VERSION.txt README.md
+	git commit -vsam "Bump version to $(NEW_VERSION)"
+	@echo "Run make tag to create and push the tag for new version $(NEW_VERSION)"
+
+.PHONY: tag
+tag: ## Create a new git tag to prepare to build a release
+	git tag -a $(VERSION) -m "$(VERSION)"
+	@echo "Run git push origin $(VERSION) to push your new tag to GitHub and trigger a build."
+
 .PHONY: clean
 clean: $(PACKR2) ## Cleanup any build binaries or packages
 	@echo "+ $@"
