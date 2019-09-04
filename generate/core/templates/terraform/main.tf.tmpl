@@ -7,14 +7,14 @@ module "{{.opts.App.Name}}" {
   handler       = "{{.opts.App.Name}}"
 
   {{if eq .opts.App.Event "cloudwatch-event" -}}
-  event {
+  event = {
     type                = "cloudwatch-scheduled-event"
     schedule_expression = "rate(1 minute)"
   }
   {{end -}}
 
   {{if eq .opts.App.Event "dynamodb" -}}
-  event {
+  event = {
     type                    = "dynamodb"
     stream_event_source_arn = "arn:aws:dynamodb:eu-west-1:647379381847:table/some-table/stream/some-identifier"
     table_name              = "some-table"
@@ -22,7 +22,7 @@ module "{{.opts.App.Name}}" {
   {{end -}}
 
   {{if eq .opts.App.Event "sns" -}}
-  event {
+  event = {
     type      = "sns"
     topic_arn = "arn:aws:sns:eu-west-1:123456789:test-topic"
   }
