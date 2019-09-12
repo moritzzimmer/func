@@ -1,12 +1,11 @@
 language: go
 
 go:
-  - 1.12.x
+  - 1.13.x
 
 env:
   global:
     - GO111MODULE=on
-    - GOPROXY=https://gocenter.io
 
 script:
   - make ci
