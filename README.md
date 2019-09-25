@@ -80,7 +80,7 @@ $ make init package deploy
 
 ```
 $ func help new
-Creates Terraform, CI and Go ressources for a new AWS Lambda project
+Creates Terraform, CI and Go resources for a new AWS Lambda project
 in a new directory.
 
 Usage:
