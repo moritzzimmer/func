@@ -11,6 +11,26 @@ Thank you to the following **GIANTS**:
 
 * [github.com/gobuffalo/packr/v2](https://godoc.org/github.com/gobuffalo/packr/v2)
 
+* [github.com/magiconair/properties](https://godoc.org/github.com/magiconair/properties)
+
+* [github.com/markbates/safe](https://godoc.org/github.com/markbates/safe)
+
+* [github.com/pelletier/go-toml](https://godoc.org/github.com/pelletier/go-toml)
+
+* [github.com/rogpeppe/go-internal](https://godoc.org/github.com/rogpeppe/go-internal)
+
+* [github.com/spf13/afero](https://godoc.org/github.com/spf13/afero)
+
 * [github.com/spf13/cobra](https://godoc.org/github.com/spf13/cobra)
 
+* [github.com/spf13/jwalterweatherman](https://godoc.org/github.com/spf13/jwalterweatherman)
+
+* [github.com/spf13/pflag](https://godoc.org/github.com/spf13/pflag)
+
 * [github.com/spf13/viper](https://godoc.org/github.com/spf13/viper)
+
+* [golang.org/x/crypto](https://godoc.org/golang.org/x/crypto)
+
+* [golang.org/x/sys](https://godoc.org/golang.org/x/sys)
+
+* [golang.org/x/tools](https://godoc.org/golang.org/x/tools)
