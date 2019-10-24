@@ -45,7 +45,7 @@ func DefaultOpts() *Options {
 			Version: "0.12.12",
 			Module: &Module{
 				Source:  "spring-media/lambda/aws",
-				Version: "4.1.3",
+				Version: "4.2.0",
 			},
 		},
 	}

@@ -1,3 +1,9 @@
+{{if eq .opts.App.Event "s3" -}}
+data "aws_s3_bucket" "example" {
+  bucket = "replace-me-with-existing-bucket"
+}
+{{end -}}
+
 module "{{.opts.App.Name}}" {
   source  = "{{.opts.Terraform.Module.Source}}"
   version = "{{.opts.Terraform.Module.Version}}"
@@ -27,4 +33,23 @@ module "{{.opts.App.Name}}" {
     topic_arn = "arn:aws:sns:eu-west-1:123456789:test-topic"
   }
   {{end -}}
+
+  {{if eq .opts.App.Event "s3" -}}
+  event = {
+    type          = "s3"
+    s3_bucket_arn = data.aws_s3_bucket.example.arn
+    s3_bucket_id  = data.aws_s3_bucket.example.id
+  }
+  {{end -}}
 }
+
+{{if eq .opts.App.Event "s3" -}}
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = data.aws_s3_bucket.example.id
+
+  lambda_function {
+    lambda_function_arn = module.{{.opts.App.Name}}.arn
+    events              = ["s3:ObjectCreated:*"]
+  }
+}
+{{end -}}

@@ -95,7 +95,7 @@ func new github.com/you/app
 Flags:
       --ci string      ci provider config file to generate [none, travis] (default "none")
   -d, --dry-run        dry run
-  -e, --event string   event type triggering the Lambda function [cloudwatch-event, dynamodb, sns] (default "cloudwatch-event")
+  -e, --event string   event type triggering the Lambda function [cloudwatch-event, dynamodb, s3, sns] (default "cloudwatch-event")
   -h, --help           help for new
 ```
 
