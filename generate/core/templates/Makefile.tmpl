@@ -71,7 +71,7 @@ init: ## Initialize Terraform working directory and backend configuration
 validate: ## Validates and rewrited the Terraform files to canonical format
 	@echo "+ $@"
 	@terraform fmt -check=true terraform/
-	@terraform validate -var region=$(REGION) terraform/
+	@terraform validate terraform/
 
 .PHONY: plan
 plan: ## Generate and show a Terraform execution plan
