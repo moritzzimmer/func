@@ -1,6 +1,6 @@
 package core
 
-import "github.com/spring-media/func/generate/ci"
+import "github.com/moritzzimmer/func/generate/ci"
 
 // Options for project generation
 type Options struct {

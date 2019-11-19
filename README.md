@@ -1,6 +1,6 @@
-<p align="center"><img src="https://github.com/spring-media/func/blob/master/logo.png" width="360"></p>
+<p align="center"><img src="https://github.com/moritzzimmer/func/blob/master/logo.png" width="360"></p>
 
-# func [![Build Status](https://travis-ci.com/spring-media/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/spring-media/func) [![Go Report Card](https://goreportcard.com/badge/github.com/spring-media/func)](https://goreportcard.com/badge/github.com/spring-media/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# func [![Build Status](https://travis-ci.com/moritzzimmer/func.svg?token=ErJ9PSqPoBz3w7BYQzzq&branch=master)](https://travis-ci.com/moritzzimmer/func) [![Go Report Card](https://goreportcard.com/badge/github.com/moritzzimmer/func)](https://goreportcard.com/badge/github.com/moritzzimmer/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform. It'll scaffold an optionated project structure generating code for
 
@@ -22,7 +22,7 @@ Before installing `func` please make sure your system meets the following requir
 ### Homebrew (macOS)
 
 ```
-brew install spring-media/tap/func
+brew install moritzzimmer/tap/func
 ```
 
 ### from release archive - 64 bits
@@ -30,7 +30,7 @@ brew install spring-media/tap/func
 MacOS
 
 ```
-$ curl -OL https://github.com/spring-media/func/releases/download/v0.0.10/func_0.0.10_darwin_amd64.tar.gz
+$ curl -OL https://github.com/moritzzimmer/func/releases/download/v0.0.10/func_0.0.10_darwin_amd64.tar.gz
 $ tar -xvzf func_0.0.10_darwin_amd64.tar.gz
 $ sudo mv func /usr/local/bin/func
 ```
@@ -38,7 +38,7 @@ $ sudo mv func /usr/local/bin/func
 GNU/Linux
 
 ```
-$ wget https://github.com/spring-media/func/releases/download/v0.0.10/func_0.0.10_linux_amd64.tar.gz
+$ wget https://github.com/moritzzimmer/func/releases/download/v0.0.10/func_0.0.10_linux_amd64.tar.gz
 $ tar -xvzf func_0.0.10_linux_amd64.tar.gz
 $ sudo mv func /usr/local/bin/
 ```

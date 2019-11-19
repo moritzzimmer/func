@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/genny"
+	"github.com/moritzzimmer/func/generate/ci"
+	"github.com/moritzzimmer/func/generate/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/spring-media/func/generate/ci"
-	"github.com/spring-media/func/generate/core"
 )
 
 var newCmd = &cobra.Command{

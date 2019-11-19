@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/spring-media/func/cmd"
+	"github.com/moritzzimmer/func/cmd"
 )
 
 func main() {

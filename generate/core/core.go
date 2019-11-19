@@ -7,7 +7,7 @@ import (
 	"github.com/gobuffalo/genny"
 	"github.com/gobuffalo/gogen"
 	"github.com/gobuffalo/packr/v2"
-	"github.com/spring-media/func/generate/ci"
+	"github.com/moritzzimmer/func/generate/ci"
 )
 
 func New(opts *Options) (*genny.Group, error) {

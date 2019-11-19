@@ -19,7 +19,7 @@ builds:
     goarch:
       - amd64
     ldflags:
-      - -s -w -X github.com/spring-media/func/cmd.version={{.Version}} -X github.com/spring-media/func/cmd.commit={{.ShortCommit}} -X github.com/spring-media/func/cmd.date={{.Date}}
+      - -s -w -X github.com/moritzzimmer/func/cmd.version={{.Version}} -X github.com/moritzzimmer/func/cmd.commit={{.ShortCommit}} -X github.com/moritzzimmer/func/cmd.date={{.Date}}
 
 archives:
   - files:
