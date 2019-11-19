@@ -1,0 +1,20 @@
+name: pull_request
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+      -
+        name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: "1.13"
+      -
+        name: Build, test and static check code
+        run: make ci

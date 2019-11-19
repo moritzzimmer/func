@@ -3,18 +3,19 @@ NAME := func
 
 # Set an output prefix, which is the local directory if not specified
 PREFIX?=$(shell pwd)
-# Set the build dir, where built cross-compiled binaries will be output
-BUILDDIR := $(PREFIX)/dist
 
 # App version
 VERSION := $(shell cat VERSION.txt)
 
-# Binary dependencies for this Makefile
-BIN_DIR := $(GOPATH)/bin
-LINTER := $(BIN_DIR)/golint
-PACKR2 := $(BIN_DIR)/packr2
-STATIC_CHECK := $(BIN_DIR)/staticcheck
-SEMBUMP := $(BIN_DIR)/sembump
+# Binary tool dependencies and build artifacts
+BINDIR := $(PREFIX)/bin
+export GOBIN :=$(BINDIR)
+export PATH := $(GOBIN):$(PATH)
+LINTER := $(BINDIR)/golint
+STATIC_CHECK := $(BINDIR)/staticcheck
+PACKR2 := $(BINDIR)/packr2
+SEMBUMP := $(BINDIR)/sembump
+BUILDDIR := $(PREFIX)/build
 
 all: help
 
@@ -22,7 +23,7 @@ all: help
 ci: build fmt lint test staticcheck vet
 
 $(PACKR2):
-	GO111MODULE=off go get -u github.com/gobuffalo/packr/v2/packr2
+	go install github.com/gobuffalo/packr/v2/packr2
 
 .PHONY: build
 build: $(PACKR2) ## Builds a static executable
@@ -43,7 +44,7 @@ fmt: ## Verifies all files have men `gofmt`ed
 	@gofmt -s -l . | grep -v vendor | tee /dev/stderr
 
 $(LINTER):
-	GO111MODULE=off go get -u golang.org/x/lint/golint
+	go install golang.org/x/lint/golint
 
 .PHONY: lint
 lint: $(LINTER) ## Verifies `golint` passes
@@ -56,7 +57,7 @@ vet: ## Verifies `go vet` passes
 	@go vet $(shell go list ./... | grep -v vendor) | tee /dev/stderr
 
 $(STATIC_CHECK):
-	GO111MODULE=off go get -u honnef.co/go/tools/cmd/staticcheck
+	go install honnef.co/go/tools/cmd/staticcheck
 
 .PHONY: staticcheck
 staticcheck: $(STATIC_CHECK) ## Verifies `staticcheck` passes
@@ -80,7 +81,7 @@ cover: ## Runs all go tests (including integration tests) with coverage
 	done;
 
 $(SEMBUMP):
-	GO111MODULE=off go get -u github.com/jessfraz/junk/sembump
+	go install github.com/jessfraz/junk/sembump
 
 .PHONY: bump-version
 BUMP := patch

@@ -31,7 +31,7 @@ release:
 brews:
   - name: func
     github:
-      owner: spring-media
+      owner: moritzzimmer
       name: homebrew-tap
     install: |
       bin.install "func"
