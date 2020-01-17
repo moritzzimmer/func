@@ -2,17 +2,14 @@ project_name: func
 
 before:
   hooks:
-    - go mod download
     - go mod tidy
+    - make init-releaser
 
 builds:
   - env:
       - CGO_ENABLED=0
       - GO111MODULE=on
       - GOPROXY=https://gocenter.io
-    hooks:
-      pre: packr2
-      post: packr2 clean
     goos:
       - linux
       - darwin
