@@ -1,6 +1,6 @@
 <p align="center"><img src="https://github.com/moritzzimmer/func/blob/master/logo.png" width="360"></p>
 
-# func [![Go Report Card](https://goreportcard.com/badge/github.com/moritzzimmer/func)](https://goreportcard.com/badge/github.com/moritzzimmer/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# func ![](https://github.com/moritzzimmer/func/workflows/ci/badge.svg) [![Go Report Card](https://goreportcard.com/badge/github.com/moritzzimmer/func)](https://goreportcard.com/badge/github.com/moritzzimmer/func) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform. It'll scaffold an optionated project structure generating code for
 
