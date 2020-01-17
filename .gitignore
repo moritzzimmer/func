@@ -4,4 +4,5 @@
 # release
 bin/
 build/
+dist/
 coverage.txt

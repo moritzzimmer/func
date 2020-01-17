@@ -38,6 +38,12 @@ install: $(PACKR2)
 	@GO111MODULE=on packr2 install
 	@packr2 clean
 	
+.PHONY: init-releaser
+init-releaser: $(PACKR2) ## Initializes goreleaser for GitHub actions
+	@echo "+ $@"
+	@go mod tidy
+	@packr2
+
 .PHONY: fmt
 fmt: ## Verifies all files have men `gofmt`ed
 	@echo "+ $@"
