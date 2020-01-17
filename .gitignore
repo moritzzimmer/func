@@ -2,5 +2,6 @@
 *-packr.go
 
 # release
-dist/
+bin/
+build/
 coverage.txt
