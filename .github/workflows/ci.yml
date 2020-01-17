@@ -1,6 +1,7 @@
-name: pull_request
+name: ci
 
 on:
+  push:
   pull_request:
 
 jobs:
@@ -14,7 +15,7 @@ jobs:
         name: Set up Go
         uses: actions/setup-go@v1
         with:
-          go-version: "1.13"
+          go-version: "1.13.x"
       -
         name: Build, test and static check code
         run: make ci
