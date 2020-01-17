@@ -87,7 +87,7 @@ cover: ## Runs all go tests (including integration tests) with coverage
 	done;
 
 $(SEMBUMP):
-	go install github.com/jessfraz/junk/sembump
+	GO111MODULE=off go get -u github.com/jessfraz/junk/sembump
 
 .PHONY: bump-version
 BUMP := patch
