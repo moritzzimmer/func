@@ -92,7 +92,7 @@ $(SEMBUMP):
 .PHONY: bump-version
 BUMP := patch
 bump-version: $(SEMBUMP) ## Bump the version in the version file. Set BUMP to [ patch | major | minor ].
-	$(eval NEW_VERSION = $(shell $(BIN_DIR)/sembump --kind $(BUMP) $(VERSION)))
+	$(eval NEW_VERSION = $(shell $(BINDIR)/sembump --kind $(BUMP) $(VERSION)))
 	@echo "Bumping VERSION.txt from $(VERSION) to $(NEW_VERSION)"
 	echo $(NEW_VERSION) > VERSION.txt
 	@echo "Updating links in README.md"
