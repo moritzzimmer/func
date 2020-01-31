@@ -24,13 +24,15 @@ module "{{.opts.App.Name}}" {
   event = {
     type                    = "dynamodb"
     stream_event_source_arn = "arn:aws:dynamodb:eu-west-1:647379381847:table/some-table/stream/some-identifier"
+    table_name              = "some-table"
   }
   {{end -}}
-
+  
   {{if eq .opts.App.Event "kinesis" -}}
   event = {
     type             = "kinesis"
-    event_source_arn = "arn:aws:kinesis:eu-central-1:647379381847:stream/some-identifier"
+    event_source_arn = "arn:aws:kinesis:eu-central-1:647379381847:stream/some-stream"
+    stream_name      = "some-stream"
   }
   {{end -}}
 
