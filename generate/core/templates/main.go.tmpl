@@ -1,12 +1,12 @@
 package main
 
 import (
-	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "sns") (eq .opts.App.Event "s3") -}}
+	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "kinesis") (eq .opts.App.Event "sns") (eq .opts.App.Event "s3") -}}
 	"context"
 	{{end -}}
 	"fmt"
 
-	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "sns") (eq .opts.App.Event "s3") -}}
+	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "kinesis") (eq .opts.App.Event "sns") (eq .opts.App.Event "s3") -}}
 	"github.com/aws/aws-lambda-go/events"
 	{{end -}}
 	"github.com/aws/aws-lambda-go/lambda"
@@ -34,6 +34,19 @@ func handler(ctx context.Context, e events.DynamoDBEvent) {
 			}
 		}
 	}
+}
+{{end -}}
+
+{{if eq .opts.App.Event "kinesis" -}}
+func handler(ctx context.Context, kinesisEvent events.KinesisEvent) error {
+	for _, record := range kinesisEvent.Records {
+		kinesisRecord := record.Kinesis
+		dataBytes := kinesisRecord.Data
+		dataText := string(dataBytes)
+
+		fmt.Printf("%s Data = %s \n", record.EventName, dataText)
+	}
+	return nil
 }
 {{end -}}
 
