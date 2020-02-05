@@ -5,8 +5,8 @@
 Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform. It'll scaffold an optionated project structure generating code for
 
 - function code
-- build automation using make
-- infrastructure and deployment automation using [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda)
+- build and deployment automation using make
+- IaaS using terraform modules ([terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda))
 - continuous integration/deployment providers like Travis
 
 Func is in an early alpha stage so expect bugs and breaking changes but give it a try!
@@ -95,7 +95,7 @@ func new github.com/you/app
 Flags:
       --ci string      ci provider config file to generate [none, travis] (default "none")
   -d, --dry-run        dry run
-  -e, --event string   event type triggering the Lambda function [cloudwatch-event, dynamodb, s3, sns] (default "cloudwatch-event")
+  -e, --event string   event type triggering the Lambda function [cloudwatch-event, dynamodb, kinesis, s3, sns, sqs] (default "cloudwatch-event")
   -h, --help           help for new
 ```
 

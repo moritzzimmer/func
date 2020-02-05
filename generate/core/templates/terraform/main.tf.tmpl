@@ -34,6 +34,14 @@ module "{{.opts.App.Name}}" {
   }
   {{end -}}
 
+  {{if eq .opts.App.Event "s3" -}}
+  event = {
+    type          = "s3"
+    s3_bucket_arn = data.aws_s3_bucket.example.arn
+    s3_bucket_id  = data.aws_s3_bucket.example.id
+  }
+  {{end -}}
+
   {{if eq .opts.App.Event "sns" -}}
   event = {
     type      = "sns"
@@ -41,11 +49,10 @@ module "{{.opts.App.Name}}" {
   }
   {{end -}}
 
-  {{if eq .opts.App.Event "s3" -}}
+  {{if eq .opts.App.Event "sqs" -}}
   event = {
-    type          = "s3"
-    s3_bucket_arn = data.aws_s3_bucket.example.arn
-    s3_bucket_id  = data.aws_s3_bucket.example.id
+    type             = "sqs"
+    event_source_arn = "arn:aws:sqs:eu-west-1:123456789:test-queue"
   }
   {{end -}}
 }
