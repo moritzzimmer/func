@@ -1,14 +1,10 @@
 package main
 
 import (
-	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "kinesis") (eq .opts.App.Event "sns") (eq .opts.App.Event "s3") -}}
 	"context"
-	{{end -}}
 	"fmt"
 
-	{{if or (eq .opts.App.Event "dynamodb") (eq .opts.App.Event "kinesis") (eq .opts.App.Event "sns") (eq .opts.App.Event "s3") -}}
 	"github.com/aws/aws-lambda-go/events"
-	{{end -}}
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
@@ -17,8 +13,8 @@ func main() {
 }
 
 {{if eq .opts.App.Event "cloudwatch-event" -}}
-func handler() {
-	fmt.Println("Hello {{.opts.App.Name}}")
+func handler(ctx context.Context, event events.CloudWatchEvent) {
+	fmt.Printf("Detail = %s\n", event.Detail)
 }
 {{end -}}
 

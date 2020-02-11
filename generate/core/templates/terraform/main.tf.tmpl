@@ -11,14 +11,14 @@ module "{{.opts.App.Name}}" {
   filename      = "${path.module}/../bin/{{.opts.App.Name}}.zip"
   function_name = "tf-{{.opts.App.Name}}"
   handler       = "{{.opts.App.Name}}"
+  runtime       = "go1.x"
 
   {{if eq .opts.App.Event "cloudwatch-event" -}}
   event = {
-    type                = "cloudwatch-scheduled-event"
+    type                = "cloudwatch-event"
     schedule_expression = "rate(1 minute)"
   }
   {{end -}}
-
 
   {{if eq .opts.App.Event "dynamodb" -}}
   event = {
