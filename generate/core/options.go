@@ -42,10 +42,10 @@ func DefaultOpts() *Options {
 		},
 		Aws: &Aws{Region: "eu-west-1"},
 		Terraform: &Terraform{
-			Version: "0.12.20",
+			Version: "0.12.29",
 			Module: &Module{
-				Source:  "spring-media/lambda/aws",
-				Version: "5.0.0",
+				Source:  "moritzzimmer/lambda/aws",
+				Version: "5.2.0",
 			},
 		},
 	}

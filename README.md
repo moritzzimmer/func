@@ -6,7 +6,7 @@ Func is a CLI app to simplify development and deployment of AWS Lambda functions
 
 - function code
 - build and deployment automation using make
-- IaaS using terraform modules ([terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda))
+- IaaS using terraform modules ([terraform-aws-lambda](https://github.com/moritzzimmer/terraform-aws-lambda))
 - continuous integration/deployment providers like Travis
 
 Func is in an early alpha stage so expect bugs and breaking changes but give it a try!
@@ -17,7 +17,7 @@ Before installing `func` please make sure your system meets the following requir
 
 - a working Go environment ([Go 1.11+](https://golang.org/))
 - a working terraform environment ([Terraform 0.11+](https://www.terraform.io/downloads.html))
-- configured [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) with sufficient IAM permissions for creating/deleting ressources from [terraform-aws-lambda](https://github.com/spring-media/terraform-aws-lambda) module
+- configured [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) with sufficient IAM permissions for creating/deleting ressources from [terraform-aws-lambda](https://github.com/moritzzimmer/terraform-aws-lambda) module
 
 ### Homebrew (macOS)
 

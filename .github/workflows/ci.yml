@@ -13,9 +13,9 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Set up Go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
-          go-version: "1.13.x"
+          go-version: "1.14.x"
       -
         name: Build, test and static check code
         run: make ci
