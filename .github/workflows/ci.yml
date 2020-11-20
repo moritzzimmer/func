@@ -16,7 +16,9 @@ jobs:
       
       - name: Build, test and static check code
         run: |
-          echo $GOPATH
           go get -u github.com/gobuffalo/packr/v2/packr2
-          ls $GOPATH/bin
+          echo $GOROOT
+          ls -al $GOROOT
+          echo $GOPATH
+          ls -al $GOPATH/bin
           make ci
