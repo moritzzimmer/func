@@ -3,6 +3,7 @@ NAME := func
 
 # Set an output prefix, which is the local directory if not specified
 PREFIX?=$(shell pwd)
+BUILDDIR := $(PREFIX)/build
 
 # App version
 VERSION := $(shell cat VERSION.txt)
