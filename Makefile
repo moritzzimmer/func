@@ -7,39 +7,26 @@ PREFIX?=$(shell pwd)
 # App version
 VERSION := $(shell cat VERSION.txt)
 
-# Binary tool dependencies and build artifacts
-BINDIR := $(PREFIX)/bin
-export GOBIN :=$(BINDIR)
-export PATH := $(GOBIN):$(PATH)
-LINTER := $(BINDIR)/golint
-STATIC_CHECK := $(BINDIR)/staticcheck
-PACKR2 := $(BINDIR)/packr2
-SEMBUMP := $(BINDIR)/sembump
-BUILDDIR := $(PREFIX)/build
-
 all: help
 
 .PHONY: ci ## Runs all tests and static code analysis
 ci: build fmt lint test staticcheck vet
 
-$(PACKR2):
-	go install github.com/gobuffalo/packr/v2/packr2
-
 .PHONY: build
-build: $(PACKR2) ## Builds a static executable
+build: ## Builds a static executable
 	@echo "+ $@"
 	@packr2
 	@CGO_ENABLED=0 go build -o $(BUILDDIR)/$(NAME) .
 	@packr2 clean
 
 .PHONY: install
-install: $(PACKR2)
+install:
 	@echo "+ $@"
 	@GO111MODULE=on packr2 install
 	@packr2 clean
 	
 .PHONY: init-releaser
-init-releaser: $(PACKR2) ## Initializes goreleaser for GitHub actions
+init-releaser: ## Initializes goreleaser for GitHub actions
 	@echo "+ $@"
 	@go mod tidy
 	@packr2
@@ -49,11 +36,8 @@ fmt: ## Verifies all files have men `gofmt`ed
 	@echo "+ $@"
 	@gofmt -s -l . | grep -v vendor | tee /dev/stderr
 
-$(LINTER):
-	go install golang.org/x/lint/golint
-
 .PHONY: lint
-lint: $(LINTER) ## Verifies `golint` passes
+lint: ## Verifies `golint` passes
 	@echo "+ $@"
 	@golint ./... | grep -v vendor | tee /dev/stderr
 
@@ -62,11 +46,8 @@ vet: ## Verifies `go vet` passes
 	@echo "+ $@"
 	@go vet $(shell go list ./... | grep -v vendor) | tee /dev/stderr
 
-$(STATIC_CHECK):
-	go install honnef.co/go/tools/cmd/staticcheck
-
 .PHONY: staticcheck
-staticcheck: $(STATIC_CHECK) ## Verifies `staticcheck` passes
+staticcheck: ## Verifies `staticcheck` passes
 	@echo "+ $@"
 	@staticcheck $(shell go list ./... | grep -v vendor)  | tee /dev/stderr
 
@@ -107,7 +88,7 @@ tag: ## Create a new git tag to prepare to build a release
 	@echo "Run git push origin $(VERSION) to push your new tag to GitHub and trigger a build."
 
 .PHONY: clean
-clean: $(PACKR2) ## Cleanup any build binaries or packages
+clean: ## Cleanup any build binaries or packages
 	@echo "+ $@"
 	@$(RM) -r $(BUILDDIR)
 	@packr2 clean

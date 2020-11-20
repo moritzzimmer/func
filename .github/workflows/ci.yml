@@ -16,6 +16,7 @@ jobs:
       
       - name: Build, test and static check code
         run: |
-          cat tools.go | grep _ | awk -F'"' '{print $2}' | xargs -tI % go install %
+          echo $GOPATH
           go get -u github.com/gobuffalo/packr/v2/packr2
+          ls $GOPATH/bin
           make ci
