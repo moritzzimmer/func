@@ -1,7 +1,6 @@
 name: ci
 
 on:
-  push:
   pull_request:
 
 jobs:
@@ -18,4 +17,5 @@ jobs:
       - name: Build, test and static check code
         run: |
           cat tools.go | grep _ | awk -F'"' '{print $2}' | xargs -tI % go install %
+          go get -u github.com/gobuffalo/packr/v2/packr2
           make ci
