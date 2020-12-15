@@ -24,8 +24,9 @@ type Aws struct {
 
 // Terraform options
 type Terraform struct {
-	Module  *Module
-	Version string
+	Module      *Module
+	Version     string
+	AwsProvider string
 }
 
 // Module options
@@ -42,10 +43,11 @@ func DefaultOpts() *Options {
 		},
 		Aws: &Aws{Region: "eu-west-1"},
 		Terraform: &Terraform{
-			Version: "0.12.20",
+			AwsProvider: "3.21",
+			Version:     "0.14.2",
 			Module: &Module{
-				Source:  "spring-media/lambda/aws",
-				Version: "5.0.0",
+				Source:  "moritzzimmer/lambda/aws",
+				Version: "5.7.0",
 			},
 		},
 	}

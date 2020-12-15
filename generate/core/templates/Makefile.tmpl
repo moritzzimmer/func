@@ -65,7 +65,7 @@ package: release ## Creates deployment package
 .PHONY: init
 init: ## Initialize Terraform working directory and backend configuration
 	@echo "+ $@"
-	@terraform init -input=false -backend-config="key=$(ENVIRONMENT)/$(NAME)/terraform.tfstate" terraform/
+	@terraform init -input=false terraform/
 
 .PHONY: validate
 validate: ## Validates and rewrited the Terraform files to canonical format
