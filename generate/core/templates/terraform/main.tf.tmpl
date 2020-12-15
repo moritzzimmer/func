@@ -9,7 +9,7 @@ module "{{.opts.App.Name}}" {
   version = "{{.opts.Terraform.Module.Version}}"
 
   filename      = "${path.module}/../bin/{{.opts.App.Name}}.zip"
-  function_name = "tf-{{.opts.App.Name}}"
+  function_name = "{{.opts.App.Name}}"
   handler       = "{{.opts.App.Name}}"
   runtime       = "go1.x"
 
