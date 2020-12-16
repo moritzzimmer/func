@@ -20,7 +20,7 @@ var newCmd = &cobra.Command{
 	Example:       "func new github.com/you/app",
 	SilenceErrors: true,
 	Short:         "Creates a new Lambda project",
-	Long: `Creates Terraform, CI and Go ressources for a new AWS Lambda project 
+	Long: `Creates Terraform, CI and Go ressources for a new AWS Lambda project
 in a new directory.
 `,
 	Args: func(cmd *cobra.Command, args []string) error {

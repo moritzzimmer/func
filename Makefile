@@ -37,7 +37,7 @@ install: $(PACKR2)
 	@echo "+ $@"
 	@GO111MODULE=on packr2 install
 	@packr2 clean
-	
+
 .PHONY: init-releaser
 init-releaser: $(PACKR2) ## Initializes goreleaser for GitHub actions
 	@echo "+ $@"
