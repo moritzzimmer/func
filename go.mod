@@ -3,10 +3,8 @@ module github.com/moritzzimmer/func
 go 1.13
 
 require (
-	github.com/gobuffalo/envy v1.8.1 // indirect
-	github.com/gobuffalo/genny v0.4.1
+	github.com/gobuffalo/genny v0.6.0
 	github.com/gobuffalo/gogen v0.2.0
-	github.com/gobuffalo/logger v1.0.3 // indirect
 	github.com/gobuffalo/packr/v2 v2.7.1
 	github.com/markbates/safe v1.0.1 // indirect
 	github.com/rogpeppe/go-internal v1.5.2 // indirect
