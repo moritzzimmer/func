@@ -7,7 +7,7 @@ Func is a CLI app to simplify development and deployment of AWS Lambda functions
 - function code
 - build and deployment automation using make
 - IaaS using terraform modules ([terraform-aws-lambda](https://github.com/moritzzimmer/terraform-aws-lambda))
-- continuous integration/deployment providers like Travis
+- continuous integration using GitHub actions
 
 Func is in an early alpha stage so expect bugs and breaking changes but give it a try!
 
@@ -93,7 +93,7 @@ Examples:
 func new github.com/you/app
 
 Flags:
-      --ci string      ci provider config file to generate [none, travis] (default "none")
+      --ci string      ci provider config file to generate [none, gh] (default "none")
   -d, --dry-run        dry run
   -e, --event string   event type triggering the Lambda function [cloudwatch-event, dynamodb, kinesis, s3, sns, sqs] (default "cloudwatch-event")
   -h, --help           help for new
