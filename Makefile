@@ -86,6 +86,14 @@ cover: ## Runs all go tests (including integration tests) with coverage
 		fi; \
 	done;
 
+$(SHOULDERS):
+	go get -u github.com/gobuffalo/shoulders
+
+.PHONY: shoulders
+shoulders: $(SHOULDERS) ## Generates SHOULDERS.md
+	@echo "+ $@"
+	@shoulders -w -n $(NAME)
+
 $(SEMBUMP):
 	GO111MODULE=off go get -u github.com/jessfraz/junk/sembump
 
