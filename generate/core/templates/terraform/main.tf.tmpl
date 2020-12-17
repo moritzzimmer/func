@@ -1,3 +1,7 @@
+locals {
+  artifact = "${path.module}/../bin/{{.opts.App.Name}}.zip"
+}
+
 {{if eq .opts.App.Event "s3" -}}
 data "aws_s3_bucket" "example" {
   bucket = "replace-me-with-existing-bucket"
@@ -8,10 +12,15 @@ module "{{.opts.App.Name}}" {
   source  = "{{.opts.Terraform.Module.Source}}"
   version = "{{.opts.Terraform.Module.Version}}"
 
-  filename      = "${path.module}/../bin/{{.opts.App.Name}}.zip"
-  function_name = "{{.opts.App.Name}}"
-  handler       = "{{.opts.App.Name}}"
-  runtime       = "go1.x"
+  filename         = local.artifact
+  function_name    = "{{.opts.App.Name}}"
+  handler          = "{{.opts.App.Name}}"
+  runtime          = "go1.x"
+  source_code_hash = filebase64sha256(local.artifact)
+
+  tags = {
+      managed_by = "terraform"
+  }
 
   {{if eq .opts.App.Event "cloudwatch-event" -}}
   event = {
