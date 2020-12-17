@@ -16,8 +16,8 @@ func New(opts *Options) (*genny.Generator, error) {
 
 	var provider string
 	switch opts.Provider {
-	case "travis", "travis-ci":
-		provider = "-dot-travis.yml.tmpl"
+	case "gh", "github-actions":
+		provider = "-dot-github/workflows/build.yml.tmpl"
 	default:
 		return g, fmt.Errorf("unknown ci provider: %s", opts.Provider)
 	}
