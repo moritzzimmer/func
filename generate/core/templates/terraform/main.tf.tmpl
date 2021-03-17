@@ -2,9 +2,44 @@ locals {
   artifact = "${path.module}/../bin/{{.opts.App.Name}}.zip"
 }
 
+{{if eq .opts.App.Event "dynamodb" -}}
+resource "aws_dynamodb_table" "table_1" {
+  name             = "example-dynamodb-table-1"
+  hash_key         = "UserId"
+  read_capacity    = 1
+  stream_enabled   = true
+  stream_view_type = "KEYS_ONLY"
+  write_capacity   = 1
+
+  attribute {
+    name = "UserId"
+    type = "S"
+  }
+}
+{{end -}}
+
+{{if eq .opts.App.Event "kinesis" -}}
+resource "aws_kinesis_stream" "stream_1" {
+  name        = "example-kinesis-stream-1"
+  shard_count = 1
+}
+{{end -}}
+
 {{if eq .opts.App.Event "s3" -}}
 data "aws_s3_bucket" "example" {
   bucket = "replace-me-with-existing-bucket"
+}
+{{end -}}
+
+{{if eq .opts.App.Event "sns" -}}
+resource "aws_sns_topic" "topic_1" {
+  name = "example-sns-topic-1"
+}
+{{end -}}
+
+{{if eq .opts.App.Event "sqs" -}}
+resource "aws_sqs_queue" "queue_1" {
+  name = "example-sqs-queue-1"
 }
 {{end -}}
 
@@ -12,6 +47,7 @@ module "{{.opts.App.Name}}" {
   source  = "{{.opts.Terraform.Module.Source}}"
   version = "{{.opts.Terraform.Module.Version}}"
 
+  description      = "bootstrapped Lambda, powered by func"
   filename         = local.artifact
   function_name    = "{{.opts.App.Name}}"
   handler          = "{{.opts.App.Name}}"
@@ -19,31 +55,48 @@ module "{{.opts.App.Name}}" {
   source_code_hash = filebase64sha256(local.artifact)
 
   tags = {
-      managed_by = "terraform"
+    managed_by = "terraform"
   }
 
   {{if eq .opts.App.Event "cloudwatch-event" -}}
-  event = {
-    type                = "cloudwatch-event"
-    schedule_expression = "rate(1 minute)"
+  // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-cloudwatch-event-rules for details
+  cloudwatch_event_rules = {
+    scheduled = {
+      schedule_expression = "rate(1 minute)"
+    }
+
+    pattern = {
+      event_pattern = <<PATTERN
+      {
+        "detail-type": [
+          "AWS Console Sign In via CloudTrail"
+        ]
+      }
+      PATTERN
+    }
   }
   {{end -}}
 
   {{if eq .opts.App.Event "dynamodb" -}}
-  event = {
-    type             = "dynamodb"
-    event_source_arn = "arn:aws:dynamodb:eu-west-1:647379381847:table/some-table/stream/some-identifier"
+  // see // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-event-source-mappings/dynamodb for details
+  event_source_mappings = {
+    table_1 = {
+      event_source_arn  = aws_dynamodb_table.table_1.stream_arn
+    }
   }
   {{end -}}
 
   {{if eq .opts.App.Event "kinesis" -}}
-  event = {
-    type             = "kinesis"
-    event_source_arn = "arn:aws:kinesis:eu-central-1:647379381847:stream/some-stream"
+  // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-event-source-mappings/kinesis for details
+  event_source_mappings = {
+    stream_1 = {      
+      event_source_arn = aws_kinesis_stream.stream_1.arn
+    }
   }
   {{end -}}
 
   {{if eq .opts.App.Event "s3" -}}
+  // s3 events are deprecated and will be removed in the next major version of https://github.com/moritzzimmer/terraform-aws-lambda
   event = {
     type          = "s3"
     s3_bucket_arn = data.aws_s3_bucket.example.arn
@@ -52,16 +105,20 @@ module "{{.opts.App.Name}}" {
   {{end -}}
 
   {{if eq .opts.App.Event "sns" -}}
-  event = {
-    type      = "sns"
-    topic_arn = "arn:aws:sns:eu-west-1:123456789:test-topic"
+  // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-sns-subscriptions for details
+  sns_subscriptions = {
+    topic_1 = {
+      topic_arn = aws_sns_topic.topic_1.arn
+    }
   }
   {{end -}}
 
   {{if eq .opts.App.Event "sqs" -}}
-  event = {
-    type             = "sqs"
-    event_source_arn = "arn:aws:sqs:eu-west-1:123456789:test-queue"
+  // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-event-source-mappings/sqs for details
+  event_source_mappings = {
+    queue_1 = {      
+      event_source_arn = aws_sqs_queue.queue_1.arn
+    }
   }
   {{end -}}
 }
