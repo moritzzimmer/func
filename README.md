@@ -30,16 +30,16 @@ brew install moritzzimmer/tap/func
 MacOS
 
 ```
-$ curl -OL https://github.com/moritzzimmer/func/releases/download/v0.0.20/func_0.0.20_darwin_amd64.tar.gz
-$ tar -xvzf func_0.0.20_darwin_amd64.tar.gz
+$ curl -OL https://github.com/moritzzimmer/func/releases/download/v0.0.21/func_0.0.21_darwin_amd64.tar.gz
+$ tar -xvzf func_0.0.21_darwin_amd64.tar.gz
 $ sudo mv func /usr/local/bin/func
 ```
 
 GNU/Linux
 
 ```
-$ wget https://github.com/moritzzimmer/func/releases/download/v0.0.20/func_0.0.20_linux_amd64.tar.gz
-$ tar -xvzf func_0.0.20_linux_amd64.tar.gz
+$ wget https://github.com/moritzzimmer/func/releases/download/v0.0.21/func_0.0.21_linux_amd64.tar.gz
+$ tar -xvzf func_0.0.21_linux_amd64.tar.gz
 $ sudo mv func /usr/local/bin/
 ```
 
