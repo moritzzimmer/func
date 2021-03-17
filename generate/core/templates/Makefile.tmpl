@@ -68,7 +68,7 @@ init: ## Initialize Terraform working directory and backend configuration
 	@terraform init -input=false terraform/
 
 .PHONY: validate
-validate: ## Validates and rewrited the Terraform files to canonical format
+validate: ## Validates and rewrites Terraform files to canonical format
 	@echo "+ $@"
 	@terraform fmt -check=true terraform/
 	@terraform validate terraform/

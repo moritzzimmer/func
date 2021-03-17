@@ -43,11 +43,11 @@ func DefaultOpts() *Options {
 		},
 		Aws: &Aws{Region: "eu-west-1"},
 		Terraform: &Terraform{
-			AwsProvider: "3.21",
-			Version:     "0.14.2",
+			AwsProvider: "3.32.0",
+			Version:     "0.14.8",
 			Module: &Module{
 				Source:  "moritzzimmer/lambda/aws",
-				Version: "5.7.0",
+				Version: "5.12.0",
 			},
 		},
 	}
