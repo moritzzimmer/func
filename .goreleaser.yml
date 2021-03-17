@@ -27,9 +27,12 @@ release:
 
 brews:
   - name: func
-    github:
+    tap:
       owner: moritzzimmer
       name: homebrew-tap
+    description: "Func is a CLI app to simplify development and deployment of AWS Lambda functions using Go and Terraform."
+    homepage: "https://github.com/moritzzimmer/func"
+    license: "MIT"
     install: |
       bin.install "func"
     test: |
