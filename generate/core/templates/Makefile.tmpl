@@ -65,18 +65,19 @@ package: release ## Creates deployment package
 .PHONY: init
 init: ## Initialize Terraform working directory and backend configuration
 	@echo "+ $@"
-	@terraform init -input=false terraform/
+	@terraform -chdir=terraform init -input=false
+
 
 .PHONY: validate
 validate: ## Validates and rewrites Terraform files to canonical format
 	@echo "+ $@"
-	@terraform fmt -check=true terraform/
-	@terraform validate terraform/
+	@terraform -chdir=terraform fmt -check=true
+	@terraform -chdir=terraform validate
 
 .PHONY: plan
 plan: ## Generate and show a Terraform execution plan
 	@echo "+ $@"
-	@terraform plan -input=false -var region=$(REGION) terraform/
+	@terraform plan -chdir=terraform -input=false -var region=$(REGION)
 
 ifeq ($(AUTO_DEPLOY), true)
  FORCE=-auto-approve
@@ -85,12 +86,12 @@ endif
 .PHONY: deploy
 deploy: ## Builds or changes infrastructure using Terraform
 	@echo "+ $@"
-	@terraform apply $(FORCE) -input=false -var region=$(REGION) terraform/
+	@terraform apply $(FORCE) -chdir=terraform -input=false -var region=$(REGION)
 
 .PHONY: destroy
 destroy: ## Destroy Terraform-managed infrastructure
 	@echo "+ $@"
-	@terraform destroy -var region=$(REGION) terraform/
+	@terraform destroy -chdir=terraform -var region=$(REGION)
 
 .PHONY: clean
 clean: ## Cleanup any build binaries or packages

@@ -78,7 +78,7 @@ func init() {
 	rootCmd.AddCommand(newCmd)
 
 	newCmd.Flags().BoolP("dry-run", "d", false, "dry run")
-	newCmd.Flags().StringP("event", "e", "cloudwatch-event", "event type triggering the Lambda function [cloudwatch-event, dynamodb, kinesis, s3, sns, sqs]")
+	newCmd.Flags().StringP("event", "e", "cloudwatch-event", "event type triggering the Lambda function [cloudwatch-event, dynamodb, kinesis, sns, sqs]")
 	newCmd.Flags().String("ci", "none", "ci provider config file to generate [none, gh]")
 	viper.BindPFlags(newCmd.Flags())
 }

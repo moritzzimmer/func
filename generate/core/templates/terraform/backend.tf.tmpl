@@ -1,0 +1,10 @@
+terraform {
+  required_version = "~> {{.opts.Terraform.Version}}"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> {{.opts.Terraform.AwsProvider}}"
+    }
+  }  
+}
