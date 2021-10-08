@@ -54,10 +54,6 @@ module "{{.opts.App.Name}}" {
   runtime          = "go1.x"
   source_code_hash = filebase64sha256(local.artifact)
 
-  tags = {
-    managed_by = "terraform"
-  }
-
   {{if eq .opts.App.Event "cloudwatch-event" -}}
   // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-cloudwatch-event-rules for details
   cloudwatch_event_rules = {
@@ -89,18 +85,9 @@ module "{{.opts.App.Name}}" {
   {{if eq .opts.App.Event "kinesis" -}}
   // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-event-source-mappings/kinesis for details
   event_source_mappings = {
-    stream_1 = {      
+    stream_1 = {
       event_source_arn = aws_kinesis_stream.stream_1.arn
     }
-  }
-  {{end -}}
-
-  {{if eq .opts.App.Event "s3" -}}
-  // s3 events are deprecated and will be removed in the next major version of https://github.com/moritzzimmer/terraform-aws-lambda
-  event = {
-    type          = "s3"
-    s3_bucket_arn = data.aws_s3_bucket.example.arn
-    s3_bucket_id  = data.aws_s3_bucket.example.id
   }
   {{end -}}
 
@@ -116,7 +103,7 @@ module "{{.opts.App.Name}}" {
   {{if eq .opts.App.Event "sqs" -}}
   // see https://github.com/moritzzimmer/terraform-aws-lambda/tree/master/examples/with-event-source-mappings/sqs for details
   event_source_mappings = {
-    queue_1 = {      
+    queue_1 = {
       event_source_arn = aws_sqs_queue.queue_1.arn
     }
   }
